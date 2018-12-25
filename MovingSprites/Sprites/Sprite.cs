@@ -31,6 +31,7 @@ namespace MovingSprites.Sprites
 
         public Input Input;
 
+        
         public Vector2 Position
         {
             get { return _position; }
@@ -62,19 +63,17 @@ namespace MovingSprites.Sprites
             else throw new Exception("This ain't right..!");
         }
 
-          public Sprite(Texture2D texture)
+          public Sprite(Texture2D texture, Vector2 newpos)
         {
             _texture = texture;
+            _position = newpos;
+            hasJumped = true;
         }
 
         public virtual void Move()
         {
             Speed = 4;
-            if (Keyboard.GetState().IsKeyDown(Input.Up))
-                Velocity.Y = -Speed;
-            else if (Keyboard.GetState().IsKeyDown(Input.Down))
-                Velocity.Y = Speed;
-            else if (Keyboard.GetState().IsKeyDown(Input.Left))
+             if (Keyboard.GetState().IsKeyDown(Input.Left))
                 Velocity.X = -Speed;
             else if (Keyboard.GetState().IsKeyDown(Input.Right))
                 Velocity.X = Speed;
@@ -85,30 +84,31 @@ namespace MovingSprites.Sprites
 
         public virtual void Jump()
         {
+
             //float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (Keyboard.GetState().IsKeyDown(Input.Space) && hasJumped == false)
+            if (Keyboard.GetState().IsKeyDown(Input.Space) )
             {
-                _position.Y -= 55f;
-                Velocity.Y = -10;
+                _position.Y -= 10f;
+                Velocity.Y = -5;
                 
                 hasJumped = true;
 
+
                 
 
             }
 
-            if (hasJumped == true)
+            if(hasJumped == true)
             {
-               
-               float i = 1f;
-                Velocity.Y = -5f;
-                if(_position.Y >= 500)
-                {
-                    Velocity.Y = 1000;
-                }
+                float i = 1;
+                Velocity.Y += 5;
+
+
 
             }
+
+            
 
             if(_position.Y >= 350)
             {
